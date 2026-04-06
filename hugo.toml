@@ -1,0 +1,31 @@
+baseURL = "https://goldenGlow21.github.io/"
+languageCode = "ko"
+title = "goldenGlow21"
+theme = "hugo-coder"
+paginate = 10
+
+[params]
+  author = "goldenGlow21"
+  description = "Security & Forensics"
+  keywords = "security,forensics,blog"
+  avatarURL = ""
+  dateFormat = "2006-01-02"
+  since = 2025
+  colorScheme = "dark"
+  hideColorSchemeToggle = false
+
+[[params.social]]
+  name = "GitHub"
+  icon = "fa-brands fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/goldenGlow21"
+
+[[menus.main]]
+  name = "Blog"
+  weight = 1
+  url = "/posts/"
+
+[[menus.main]]
+  name = "About"
+  weight = 2
+  url = "/about/"
