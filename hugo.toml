@@ -1,14 +1,14 @@
 baseURL = "https://goldenGlow21.github.io/"
-languageCode = "ko"
-title = "goldenGlow21"
+languageCode = "en"
+title = "SITREP & AAR"
 theme = "hugo-coder"
 paginate = 10
 
 [params]
   author = "goldenGlow21"
-  description = "Security & Forensics"
+  description = "at starry, serene night"
   keywords = "security,forensics,blog"
-  avatarURL = ""
+  avatarURL = "/images/arctic_fox.jpg"
   dateFormat = "2006-01-02"
   since = 2025
   colorScheme = "dark"
@@ -19,6 +19,18 @@ paginate = 10
   icon = "fa-brands fa-github fa-2x"
   weight = 1
   url = "https://github.com/goldenGlow21"
+
+[[params.social]]
+  name = "LinkedIn"
+  icon = "fa-brands fa-linkedin fa-2x"
+  weight = 2
+  url = "https://www.linkedin.com/in/jonghoon-lee-882a05372/"
+
+[[params.social]]
+  name = "Email"
+  icon = "fa-solid fa-envelope fa-2x"
+  weight = 3
+  url = "mailto:jonghoon8928@gmail.com"
 
 [[menus.main]]
   name = "Blog"
