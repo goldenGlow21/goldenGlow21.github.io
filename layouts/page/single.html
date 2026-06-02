@@ -1,18 +1,19 @@
 {{ define "main" }}
 
-{{ $cwd := "~" }}
 {{ $file := printf "%s.md" (path.Base .RelPermalink) }}
 {{ if eq $file ".md" }}{{ $file = "page.md" }}{{ end }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" $file) }}
-<div class="output">
-  <article class="post-content">
-    <h1 style="margin-top:0">{{ .Title }}</h1>
-    {{ .Content }}
-  </article>
-</div>
+{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "cat" "args" $file) }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "") }}
-<div class="output"><span class="cursor">&nbsp;</span></div>
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">{{ .Title }}</h1>
+    {{ with .Params.description }}<p class="article-lead">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="article-body">
+    {{ .Content }}
+  </div>
+</article>
 
 {{ end }}

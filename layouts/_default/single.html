@@ -4,33 +4,60 @@
 {{ $file := printf "%s.md" (path.Base .RelPermalink) }}
 {{ with .File }}{{ $file = path.Base .Path }}{{ end }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "stat" "args" $file) }}
-<div class="output muted post-meta">
-  <span><span style="color:var(--nord13)">date</span>: {{ .Date.Format .Site.Params.dateFormat }}</span>
-  {{ with .Lastmod }}{{ if ne (.Format "2006-01-02") ($.Date.Format "2006-01-02") }}<span class="sep">|</span><span><span style="color:var(--nord13)">modified</span>: {{ .Format $.Site.Params.dateFormat }}</span>{{ end }}{{ end }}
-  {{ with .ReadingTime }}<span class="sep">|</span><span><span style="color:var(--nord13)">reading</span>: ~{{ . }} min</span>{{ end }}
-  {{ with .WordCount }}<span class="sep">|</span><span><span style="color:var(--nord13)">words</span>: {{ . }}</span>{{ end }}
-  {{ with .Params.categories }}<span class="sep">|</span><span><span style="color:var(--nord13)">cat</span>: {{ delimit . ", " }}</span>{{ end }}
-</div>
-
 {{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" $file) }}
-<div class="output">
-  <article class="post-content">
-    <h1 style="margin-top:0">{{ .Title }}</h1>
+
+<article class="article">
+  <header class="article-header">
+    <h1 class="article-title">{{ .Title }}</h1>
+    {{ with .Params.description }}<p class="article-lead">{{ . }}</p>{{ end }}
+    <div class="article-meta">
+      <span class="meta-item"><span class="meta-key">date</span> {{ .Date.Format .Site.Params.dateFormat }}</span>
+      {{ with .ReadingTime }}<span class="meta-item"><span class="meta-key">read</span> ~{{ . }} min</span>{{ end }}
+      {{ with .WordCount }}<span class="meta-item"><span class="meta-key">words</span> {{ . }}</span>{{ end }}
+      {{ with .Params.categories }}<span class="meta-item"><span class="meta-key">cat</span> {{ delimit . " / " }}</span>{{ end }}
+    </div>
     {{ with .Params.tags }}
-      <div style="margin-bottom:1em">
+      <div class="article-tags">
         {{ range . }}<span class="tag">#{{ . }}</span>{{ end }}
       </div>
     {{ end }}
-    {{ .Content }}
-  </article>
+  </header>
 
-  {{ if or .NextInSection .PrevInSection }}
-    <nav class="post-nav">
-      <div>{{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
-      <div>{{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
-    </nav>
+  {{ if .TableOfContents }}
+    {{ if gt (len .TableOfContents) 50 }}
+      <aside class="article-toc">
+        <div class="toc-title">// table of contents</div>
+        {{ .TableOfContents }}
+      </aside>
+    {{ end }}
   {{ end }}
-</div>
+
+  <div class="article-body">
+    {{ .Content }}
+  </div>
+
+  <footer class="article-footer">
+    {{ if or .NextInSection .PrevInSection }}
+      <nav class="post-nav">
+        <div class="post-nav-cell prev-cell">
+          {{ with .PrevInSection }}
+            <span class="post-nav-label">&larr; previous</span>
+            <a class="post-nav-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ end }}
+        </div>
+        <div class="post-nav-cell next-cell">
+          {{ with .NextInSection }}
+            <span class="post-nav-label">next &rarr;</span>
+            <a class="post-nav-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ end }}
+        </div>
+      </nav>
+    {{ end }}
+
+    <div class="back-link">
+      <a href="{{ with .Parent }}{{ .RelPermalink }}{{ else }}/posts/{{ end }}">&larr; back to {{ with .Parent }}{{ .Title }}/{{ else }}posts/{{ end }}</a>
+    </div>
+  </footer>
+</article>
 
 {{ end }}

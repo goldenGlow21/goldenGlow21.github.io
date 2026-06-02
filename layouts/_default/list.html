@@ -3,18 +3,17 @@
 {{ $cwd := printf "~%s" .RelPermalink | strings.TrimSuffix "/" }}
 {{ if eq .RelPermalink "/" }}{{ $cwd = "~" }}{{ end }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "pwd") }}
-<div class="output">{{ .Permalink }}</div>
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "ls" "args" "<span class=\"flag\">-lah</span>") }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" "README.md") }}
-<div class="output">
-  <h1 style="margin-top:0">{{ .Title }}</h1>
-  {{ with .Content }}<div class="post-content">{{ . }}</div>{{ end }}
-</div>
+<header class="section-header">
+  <h1 class="section-title">{{ .Title }}/</h1>
+  {{ with .Params.description }}<p class="section-desc">{{ . }}</p>{{ end }}
+  {{ with .Content }}<div class="section-readme">{{ . }}</div>{{ end }}
+</header>
 
 {{ if .Sections }}
-  {{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "ls" "args" "<span class=\"flag\">-d</span> */") }}
-  <div class="output">
+  <section class="block">
+    <h2 class="block-title">// subdirectories</h2>
     <div class="ls-grid">
       {{ range .Sections }}
         <a class="ls-card" href="{{ .RelPermalink }}">
@@ -24,30 +23,44 @@
         </a>
       {{ end }}
     </div>
-  </div>
+  </section>
 {{ end }}
 
 {{ if .RegularPages }}
-  {{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "ls" "args" "<span class=\"flag\">-lt</span>") }}
-  <div class="output">
+  <section class="block">
+    <h2 class="block-title">// posts</h2>
     {{ $paginator := .Paginate .RegularPages }}
     {{ $grouped := $paginator.Pages.GroupByDate "2006" }}
     {{ range $grouped }}
-      <h3 style="margin:1em 0 .4em;color:var(--nord13)"># {{ .Key }}</h3>
-      <ul class="post-list">
+      <h3 class="year-mark"># {{ .Key }}</h3>
+      <ul class="post-cards">
         {{ range .Pages }}
-          <li>
-            <span class="date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
-            <span class="cat">[{{ with .Params.categories }}{{ index . 0 }}{{ else }}{{ .Section }}{{ end }}]</span>
-            <span class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+          <li class="post-card">
+            <a class="post-card-link" href="{{ .RelPermalink }}">
+              <div class="post-card-head">
+                <span class="post-card-date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
+                <span class="post-card-cat">[{{ with .Params.categories }}{{ index . 0 }}{{ else }}{{ .Section }}{{ end }}]</span>
+              </div>
+              <h3 class="post-card-title">{{ .Title }}</h3>
+              {{ with .Params.description }}
+                <p class="post-card-desc">{{ . }}</p>
+              {{ else }}
+                <p class="post-card-desc">{{ .Summary | plainify | truncate 140 }}</p>
+              {{ end }}
+              {{ with .Params.tags }}
+                <div class="post-card-tags">
+                  {{ range . }}<span class="tag">#{{ . }}</span>{{ end }}
+                </div>
+              {{ end }}
+            </a>
           </li>
         {{ end }}
       </ul>
     {{ end }}
     {{ template "_internal/pagination.html" . }}
-  </div>
+  </section>
 {{ else if not .Sections }}
-  <div class="output muted">
+  <div class="empty-state">
     <p># no entries yet &mdash; <code>touch first-post.md</code> to get started.</p>
   </div>
 {{ end }}
