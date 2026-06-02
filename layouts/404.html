@@ -1,0 +1,20 @@
+{{ define "main" }}
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "cd" "args" "<span class=\"args\">/dev/null</span>") }}
+<div class="output">
+  <pre style="color:var(--nord11);margin:0">bash: cd: that path doesn't exist (404)</pre>
+</div>
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "ls") }}
+<div class="output">
+  <ul>
+    <li><a href="/">~/</a> &mdash; home</li>
+    <li><a href="/posts/">~/posts/</a> &mdash; all posts</li>
+    <li><a href="/about/">~/about.md</a> &mdash; about me</li>
+  </ul>
+</div>
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "") }}
+<div class="output"><span class="cursor">&nbsp;</span></div>
+
+{{ end }}

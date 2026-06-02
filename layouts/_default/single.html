@@ -1,0 +1,36 @@
+{{ define "main" }}
+
+{{ $cwd := printf "~%s" .RelPermalink | strings.TrimSuffix "/" }}
+{{ $file := printf "%s.md" (path.Base .RelPermalink) }}
+{{ with .File }}{{ $file = path.Base .Path }}{{ end }}
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "stat" "args" $file) }}
+<div class="output muted post-meta">
+  <span><span style="color:var(--nord13)">date</span>: {{ .Date.Format .Site.Params.dateFormat }}</span>
+  {{ with .Lastmod }}{{ if ne (.Format "2006-01-02") ($.Date.Format "2006-01-02") }}<span class="sep">|</span><span><span style="color:var(--nord13)">modified</span>: {{ .Format $.Site.Params.dateFormat }}</span>{{ end }}{{ end }}
+  {{ with .ReadingTime }}<span class="sep">|</span><span><span style="color:var(--nord13)">reading</span>: ~{{ . }} min</span>{{ end }}
+  {{ with .WordCount }}<span class="sep">|</span><span><span style="color:var(--nord13)">words</span>: {{ . }}</span>{{ end }}
+  {{ with .Params.categories }}<span class="sep">|</span><span><span style="color:var(--nord13)">cat</span>: {{ delimit . ", " }}</span>{{ end }}
+</div>
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" $file) }}
+<div class="output">
+  <article class="post-content">
+    <h1 style="margin-top:0">{{ .Title }}</h1>
+    {{ with .Params.tags }}
+      <div style="margin-bottom:1em">
+        {{ range . }}<span class="tag">#{{ . }}</span>{{ end }}
+      </div>
+    {{ end }}
+    {{ .Content }}
+  </article>
+
+  {{ if or .NextInSection .PrevInSection }}
+    <nav class="post-nav">
+      <div>{{ with .PrevInSection }}<a class="prev" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
+      <div>{{ with .NextInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
+    </nav>
+  {{ end }}
+</div>
+
+{{ end }}

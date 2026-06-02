@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+{{ $cwd := printf "~%s" .RelPermalink | strings.TrimSuffix "/" }}
+{{ if eq .RelPermalink "/" }}{{ $cwd = "~" }}{{ end }}
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "pwd") }}
+<div class="output">{{ .Permalink }}</div>
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" "README.md") }}
+<div class="output">
+  <h1 style="margin-top:0">{{ .Title }}</h1>
+  {{ with .Content }}<div class="post-content">{{ . }}</div>{{ end }}
+</div>
+
+{{ if .Sections }}
+  {{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "ls" "args" "<span class=\"flag\">-d</span> */") }}
+  <div class="output">
+    <div class="ls-grid">
+      {{ range .Sections }}
+        <a class="ls-card" href="{{ .RelPermalink }}">
+          <div class="name">{{ .Title }}/</div>
+          <div class="desc">{{ with .Params.description }}{{ . }}{{ else }}&mdash;{{ end }}</div>
+          <div class="count">{{ len .RegularPages }} post(s)</div>
+        </a>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}
+
+{{ if .RegularPages }}
+  {{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "ls" "args" "<span class=\"flag\">-lt</span>") }}
+  <div class="output">
+    {{ $paginator := .Paginate .RegularPages }}
+    {{ $grouped := $paginator.Pages.GroupByDate "2006" }}
+    {{ range $grouped }}
+      <h3 style="margin:1em 0 .4em;color:var(--nord13)"># {{ .Key }}</h3>
+      <ul class="post-list">
+        {{ range .Pages }}
+          <li>
+            <span class="date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
+            <span class="cat">[{{ with .Params.categories }}{{ index . 0 }}{{ else }}{{ .Section }}{{ end }}]</span>
+            <span class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+          </li>
+        {{ end }}
+      </ul>
+    {{ end }}
+    {{ template "_internal/pagination.html" . }}
+  </div>
+{{ else if not .Sections }}
+  <div class="output muted">
+    <p># no entries yet &mdash; <code>touch first-post.md</code> to get started.</p>
+  </div>
+{{ end }}
+
+{{ end }}

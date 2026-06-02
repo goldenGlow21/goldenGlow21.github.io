@@ -1,0 +1,18 @@
+<footer class="term-footer">
+  <div class="prompt-line">
+    <span class="prompt-tiny"><span class="user">{{ .Site.Params.author }}</span><span class="at">@</span><span class="host">{{ .Site.Params.host }}</span><span class="colon">:</span><span class="cwd">~</span><span class="dollar">$</span></span>
+    <span class="cmd">echo</span> <span class="str">"&copy; {{ .Site.Params.since }}&ndash;{{ now.Year }} {{ .Site.Params.author }}"</span>
+  </div>
+  <div class="output muted">
+    <p>&copy; {{ .Site.Params.since }}&ndash;{{ now.Year }} {{ .Site.Params.author }} &middot; built with <a href="https://gohugo.io/">Hugo</a> &middot; Nord palette</p>
+    <div class="socials">
+      {{ with .Site.Params.github }}<a href="{{ . }}" target="_blank" rel="noopener">[github]</a>{{ end }}
+      {{ with .Site.Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener">[linkedin]</a>{{ end }}
+      {{ with .Site.Params.email }}<a href="mailto:{{ . }}">[email]</a>{{ end }}
+    </div>
+  </div>
+  <div class="prompt-line">
+    <span class="prompt-tiny"><span class="user">{{ .Site.Params.author }}</span><span class="at">@</span><span class="host">{{ .Site.Params.host }}</span><span class="colon">:</span><span class="cwd">~</span><span class="dollar">$</span></span>
+    <span class="cursor">&block;</span>
+  </div>
+</footer>

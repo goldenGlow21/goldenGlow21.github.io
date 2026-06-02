@@ -1,43 +1,51 @@
 baseURL = "https://goldenGlow21.github.io/"
 languageCode = "en"
-title = "SITREP & AAR"
-theme = "hugo-coder"
+title = "goldenGlow21 :: ~"
 paginate = 10
+enableEmoji = false
+enableRobotsTXT = true
 
 [params]
   author = "goldenGlow21"
-  description = "at starry, serene night"
-  keywords = "security,forensics,blog"
+  realName = "Jonghoon Lee"
+  host = "arch"
+  description = "Security & Digital Forensics notebook"
+  keywords = "security,forensics,cti,ctf,blog"
   avatarURL = "/images/arctic_fox.jpg"
   dateFormat = "2006-01-02"
   since = 2025
-  colorScheme = "dark"
-  hideColorSchemeToggle = false
+  email = "jonghoon8928@gmail.com"
+  github = "https://github.com/goldenGlow21"
+  linkedin = "https://www.linkedin.com/in/jonghoon-lee-882a05372/"
 
-[[params.social]]
-  name = "GitHub"
-  icon = "fa-brands fa-github fa-2x"
-  weight = 1
-  url = "https://github.com/goldenGlow21"
+[markup]
+  [markup.highlight]
+    style = "nord"
+    lineNos = true
+    lineNumbersInTable = false
+    tabWidth = 2
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
 
-[[params.social]]
-  name = "LinkedIn"
-  icon = "fa-brands fa-linkedin fa-2x"
-  weight = 2
-  url = "https://www.linkedin.com/in/jonghoon-lee-882a05372/"
-
-[[params.social]]
-  name = "Email"
-  icon = "fa-solid fa-envelope fa-2x"
-  weight = 3
-  url = "mailto:jonghoon8928@gmail.com"
+[taxonomies]
+  category = "categories"
+  tag = "tags"
 
 [[menus.main]]
-  name = "Blog"
+  name = "~"
   weight = 1
+  url = "/"
+
+[[menus.main]]
+  name = "posts"
+  weight = 2
   url = "/posts/"
 
 [[menus.main]]
-  name = "About"
-  weight = 2
+  name = "about"
+  weight = 3
   url = "/about/"

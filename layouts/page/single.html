@@ -1,0 +1,18 @@
+{{ define "main" }}
+
+{{ $cwd := "~" }}
+{{ $file := printf "%s.md" (path.Base .RelPermalink) }}
+{{ if eq $file ".md" }}{{ $file = "page.md" }}{{ end }}
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "cat" "args" $file) }}
+<div class="output">
+  <article class="post-content">
+    <h1 style="margin-top:0">{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+</div>
+
+{{ partial "prompt.html" (dict "ctx" . "cwd" $cwd "cmd" "") }}
+<div class="output"><span class="cursor">&nbsp;</span></div>
+
+{{ end }}
