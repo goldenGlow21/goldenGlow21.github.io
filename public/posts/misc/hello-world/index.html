@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello, World · goldenGlow21</title>
+  <meta name="description" content="블로그 첫 글 — 왜 이 노트를 시작했는지.">
+  <meta name="keywords" content="meta,intro">
+  <meta name="author" content="goldenGlow21">
+
+  <meta property="og:title" content="Hello, World">
+  <meta property="og:description" content="블로그 첫 글 — 왜 이 노트를 시작했는지.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://localhost:1313/posts/misc/hello-world/">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="/css/main.css">
+
+  
+
+  <script>
+    
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  
+</head>
+<body>
+  <header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">goldenGlow21<span class="dot">.</span>log</a>
+    <nav class="nav">
+      
+        <a href="/" class="">Home</a>
+      
+        <a href="/posts/" class="">Posts</a>
+      
+        <a href="/about/" class="">About</a>
+      
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+
+  <main class="site-main">
+    <div class="wrap">
+      
+
+<article>
+  <header class="article-header">
+    <h1>Hello, World</h1>
+    <p class="article-lead">블로그 첫 글 — 왜 이 노트를 시작했는지.</p>
+    <div class="article-meta">
+      <span>2026-06-02</span>
+      <span class="cat">misc</span>
+      <span>~1 min read</span>
+      <span>81 words</span>
+    </div>
+    
+      <div class="post-tags">
+        <span class="tag">#meta</span><span class="tag">#intro</span>
+      </div>
+    
+  </header>
+
+  
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#ping">ping</a></li>
+    <li><a href="#왜-다시-만들었나">왜 다시 만들었나</a></li>
+    <li><a href="#스택">스택</a></li>
+  </ul>
+</nav>
+    </aside>
+  
+
+  <div class="prose">
+    <h2 id="ping">ping</h2>
+<p>블로그를 다시 셋업했습니다. 그동안 노션이나 로컬 마크다운에만 정리해두던 학습 기록을
+조금씩 공개하면서 정제하려고 합니다.</p>
+<h2 id="왜-다시-만들었나">왜 다시 만들었나</h2>
+<ul>
+<li>기존 테마는 익숙하지 않아 글쓰는 마찰이 컸음</li>
+<li>시리즈 분류 (CTI / Forensic / CTF / Misc) 를 디렉터리 기반으로 깔끔하게 보고 싶었음</li>
+<li>터미널 감성이 본업 톤과 잘 맞다고 느꼈음</li>
+</ul>
+<h2 id="스택">스택</h2>
+<ul>
+<li><a href="https://gohugo.io/">Hugo</a> — 정적 사이트 생성기</li>
+<li>Nord palette — 컬러</li>
+<li>GitHub Pages + Actions — 배포</li>
+</ul>
+<blockquote>
+<p><code># todo:</code> 첫 시리즈는 메모리 포렌식 워크플로 정리부터 시작할 예정.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;let&#39;s go&#34;</span> <span style="color:#eceff4">|</span> tee -a ~/posts/misc/hello-world.md
+</span></span></code></pre></div>
+  </div>
+
+  <footer class="article-footer">
+    
+    <div class="back-link">
+      <a href="/posts/misc/">&larr; back to misc</a>
+    </div>
+  </footer>
+</article>
+
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; 2025&ndash;2026 Jonghoon Lee · built with <a href="https://gohugo.io/">Hugo</a></span>
+    <div class="socials">
+      <a href="https://github.com/goldenGlow21" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/jonghoon-lee-882a05372/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:jonghoon8928@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme');
+        var next = cur === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+</body>
+</html>

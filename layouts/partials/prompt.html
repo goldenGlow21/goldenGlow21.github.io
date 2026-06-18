@@ -1,5 +1,0 @@
-{{/* params: cwd (string), cmd (string), args (string, optional, raw html allowed) */}}
-<div class="prompt-line">
-  <span class="prompt"><span class="user">{{ .ctx.Site.Params.author }}</span><span class="at">@</span><span class="host">{{ .ctx.Site.Params.host }}</span><span class="colon">:</span><span class="cwd">{{ .cwd | default "~" }}</span><span class="dollar">$</span></span>
-  <span class="cmd">{{ .cmd }}</span>{{ with .args }} <span class="args">{{ . | safeHTML }}</span>{{ end }}
-</div>

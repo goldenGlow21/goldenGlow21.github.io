@@ -1,76 +1,46 @@
 {{ define "main" }}
 
-<section class="home-banner">
-<pre>
-   ____       _     _            ____ _               ____  _
-  / ___| ___ | | __| | ___ _ __ / ___| | _____      _|___ \/ |
- | |  _ / _ \| |/ _` |/ _ \ '_ \ |  _| |/ _ \ \ /\ / / __) | |
- | |_| | (_) | | (_| |  __/ | | | |_| | | (_) \ V  V / / __/| |
-  \____|\___/|_|\__,_|\___|_| |_|\____|_|\___/ \_/\_/ |_____|_|
-</pre>
-</section>
-
-{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "whoami") }}
-<div class="output">
-  <div class="profile-card">
-    {{ with .Site.Params.avatarURL }}<img src="{{ . | relURL }}" alt="avatar">{{ end }}
+<section class="hero">
+  <div class="hero-row">
+    {{ with .Site.Params.avatarURL }}<img class="hero-avatar" src="{{ . | relURL }}" alt="avatar">{{ end }}
     <div>
-      <div class="field"><span class="key">name</span><span class="val">{{ .Site.Params.realName }}</span></div>
-      <div class="field"><span class="key">handle</span><span class="val">{{ .Site.Params.author }}</span></div>
-      <div class="field"><span class="key">role</span><span class="val">Security &amp; Digital Forensics</span></div>
-      <div class="field"><span class="key">focus</span><span class="val">CTI &middot; Forensic &middot; CTF</span></div>
-      <div class="field"><span class="key">contact</span><span class="val">
-        <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">github</a> &middot;
-        <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">linkedin</a> &middot;
-        <a href="mailto:{{ .Site.Params.email }}">email</a>
-      </span></div>
+      <h1>{{ .Site.Params.realName | default .Site.Params.author }}</h1>
+      <p class="tagline">{{ .Site.Params.description }}</p>
+      <div class="hero-socials">
+        {{ with .Site.Params.github }}<a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>{{ end }}
+        {{ with .Site.Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
+        {{ with .Site.Params.email }}<a href="mailto:{{ . }}">Email</a>{{ end }}
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "cat" "args" "<span class=\"args\">.bashrc | grep alias</span>") }}
-<div class="output">
-  <pre style="margin:0;color:var(--fg-muted)">alias <span style="color:var(--nord13)">posts</span>=<span style="color:var(--nord14)">'cd ~/posts &amp;&amp; ls'</span>
-alias <span style="color:var(--nord13)">about</span>=<span style="color:var(--nord14)">'cat ~/about.md'</span>
-alias <span style="color:var(--nord13)">contact</span>=<span style="color:var(--nord14)">'mail {{ .Site.Params.email }}'</span></pre>
-</div>
-
-{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "ls" "args" "<span class=\"flag\">-la</span> posts/") }}
-<div class="output">
-  <div class="ls-grid">
-    {{ with .Site.GetPage "/posts" }}
+{{ with .Site.GetPage "/posts" }}
+  {{ if .Sections }}
+    <div class="sec-head"><h2>Categories</h2></div>
+    <div class="cat-grid">
       {{ range .Sections }}
-        <a class="ls-card" href="{{ .RelPermalink }}">
-          <div class="name">{{ .Title }}/</div>
-          <div class="desc">{{ with .Params.description }}{{ . }}{{ else }}&mdash;{{ end }}</div>
-          <div class="count">{{ len .RegularPages }} post(s)</div>
+        <a class="cat-card" href="{{ .RelPermalink }}">
+          <div class="name">{{ .Title }}</div>
+          {{ with .Params.description }}<div class="desc">{{ . }}</div>{{ end }}
+          <div class="count">{{ len .RegularPages }} post{{ if ne (len .RegularPages) 1 }}s{{ end }}</div>
         </a>
-      {{ else }}
-        <div class="ls-card"><div class="name file">README.md</div><div class="desc">No categories yet.</div></div>
       {{ end }}
-    {{ else }}
-      <div class="ls-card"><div class="name file">README.md</div><div class="desc">No posts/ directory yet.</div></div>
-    {{ end }}
-  </div>
-</div>
-
-{{ $recent := first 5 (where .Site.RegularPages "Section" "posts") }}
-{{ if $recent }}
-  {{ partial "prompt.html" (dict "ctx" . "cwd" "~/posts" "cmd" "tail" "args" "<span class=\"flag\">-n 5</span> .recent") }}
-  <div class="output">
-    <ul class="post-list">
-      {{ range $recent }}
-        <li>
-          <span class="date">{{ .Date.Format $.Site.Params.dateFormat }}</span>
-          <span class="cat">[{{ with .Params.categories }}{{ index . 0 }}{{ else }}misc{{ end }}]</span>
-          <span class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
-        </li>
-      {{ end }}
-    </ul>
-  </div>
+    </div>
+  {{ end }}
 {{ end }}
 
-{{ partial "prompt.html" (dict "ctx" . "cwd" "~" "cmd" "") }}
-<div class="output"><span class="cursor">&nbsp;</span></div>
+{{ $recent := first 6 (where .Site.RegularPages "Section" "posts") }}
+{{ if $recent }}
+  <div class="sec-head">
+    <h2>Recent posts</h2>
+    <a class="more" href="{{ "/posts/" | relURL }}">all posts &rarr;</a>
+  </div>
+  <ul class="post-list">
+    {{ range $recent }}
+      {{ partial "post-item.html" . }}
+    {{ end }}
+  </ul>
+{{ end }}
 
 {{ end }}

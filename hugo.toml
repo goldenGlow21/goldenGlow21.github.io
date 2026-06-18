@@ -1,15 +1,19 @@
 baseURL = "https://goldenGlow21.github.io/"
-languageCode = "en"
-title = "goldenGlow21 :: ~"
-paginate = 10
+title = "goldenGlow21"
 enableEmoji = false
 enableRobotsTXT = true
+
+[languages.en]
+  label = "English"
+  weight = 1
+
+[pagination]
+  pagerSize = 10
 
 [params]
   author = "goldenGlow21"
   realName = "Jonghoon Lee"
-  host = "kali"
-  description = "Security & Digital Forensics notebook"
+  description = "Security & Digital Forensics를 공부하고 기록하는 공간"
   keywords = "security,forensics,cti,ctf,blog"
   avatarURL = "/images/arctic_fox.jpg"
   dateFormat = "2006-01-02"
@@ -21,10 +25,9 @@ enableRobotsTXT = true
 [markup]
   [markup.highlight]
     style = "nord"
-    lineNos = true
-    lineNumbersInTable = false
+    lineNos = false
     tabWidth = 2
-    noClasses = false
+    noClasses = true
   [markup.goldmark.renderer]
     unsafe = true
   [markup.tableOfContents]
@@ -36,16 +39,16 @@ enableRobotsTXT = true
   tag = "tags"
 
 [[menus.main]]
-  name = "~"
+  name = "Home"
   weight = 1
   url = "/"
 
 [[menus.main]]
-  name = "posts"
+  name = "Posts"
   weight = 2
   url = "/posts/"
 
 [[menus.main]]
-  name = "about"
+  name = "About"
   weight = 3
   url = "/about/"
