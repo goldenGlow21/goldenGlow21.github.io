@@ -1,0 +1,86 @@
+// Lists of links outside post bodies: the post list, tag links, the tag
+// index, and the older/newer navigation under a post.
+
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0.375rem 0;
+  }
+
+  time {
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+
+  a {
+    color: var(--fg);
+  }
+}
+
+.tag-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+
+  a {
+    color: var(--muted);
+  }
+}
+
+.tag-index {
+  margin-bottom: 2.5rem;
+
+  .count {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+}
+
+.tag-section {
+  margin-bottom: 2.5rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+  }
+}
+
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    max-width: 48%;
+    color: var(--fg);
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+}
+
+.post-nav-newer {
+  margin-left: auto;
+  text-align: right;
+}
+
+@media (max-width: 30rem) {
+  .post-list li {
+    flex-direction: column;
+    gap: 0;
+  }
+}

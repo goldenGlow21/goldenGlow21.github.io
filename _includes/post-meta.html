@@ -1,0 +1,10 @@
+{%- comment -%}
+  Publish date of a post, plus the `updated` date when its front matter has one.
+  Usage: {% include post-meta.html post=page %}
+{%- endcomment -%}
+<p class="post-meta">
+  <time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%Y-%m-%d" }}</time>
+  {%- if include.post.updated %}
+  <span class="post-updated">updated <time datetime="{{ include.post.updated | date_to_xmlschema }}">{{ include.post.updated | date: "%Y-%m-%d" }}</time></span>
+  {%- endif %}
+</p>

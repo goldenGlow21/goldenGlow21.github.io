@@ -1,0 +1,118 @@
+// Page frame: the single text column, site header, site footer, and the
+// title blocks of posts and pages.
+
+.container {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--space);
+}
+
+main.container {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.site-title {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 1.125rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+
+  a {
+    color: var(--muted);
+
+    &[aria-current="page"] {
+      color: var(--fg);
+    }
+  }
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    color: var(--muted);
+  }
+}
+
+.post-header,
+.page-title {
+  margin-bottom: 2.5rem;
+}
+
+.post-title,
+.page-title {
+  margin-top: 0;
+  font-size: 1.875rem;
+  line-height: 1.35;
+}
+
+.post-title {
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.post-updated::before {
+  content: "/ ";
+}
+
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.home-intro {
+  margin-bottom: 2.5rem;
+}
+
+.comments {
+  margin-top: 3rem;
+}

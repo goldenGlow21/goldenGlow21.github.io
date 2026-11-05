@@ -1,0 +1,11 @@
+---
+layout: default
+---
+{%- comment -%}
+  Front page: the optional text written in index.md, then every post, newest first.
+{%- endcomment -%}
+{%- assign intro = content | strip -%}
+{%- if intro != "" %}
+<div class="prose home-intro">{{ intro }}</div>
+{%- endif %}
+{% include post-list.html posts=site.posts %}

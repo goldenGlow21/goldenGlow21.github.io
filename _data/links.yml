@@ -1,0 +1,10 @@
+# Footer links, in display order. A `url` starting with "/" is a path on this
+# site; anything else (https:, mailto:) is used as written.
+- title: GitHub
+  url: https://github.com/goldenGlow21
+- title: LinkedIn
+  url: https://www.linkedin.com/in/jonghoon-lee-882a05372/
+- title: Email
+  url: mailto:jonghoon8928@gmail.com
+- title: RSS
+  url: /feed.xml

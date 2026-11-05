@@ -1,0 +1,14 @@
+{%- comment -%}
+  Copyright line and the links defined in _data/links.yml.
+{%- endcomment -%}
+<footer class="site-footer">
+  <div class="container site-footer-inner">
+    <span>&copy; {{ site.time | date: "%Y" }} {{ site.author.name | escape }}</span>
+    <ul class="footer-links">
+      {%- for link in site.data.links %}
+      {%- assign first_char = link.url | slice: 0 %}
+      <li><a href="{% if first_char == '/' %}{{ link.url | relative_url }}{% else %}{{ link.url }}{% endif %}">{{ link.title | escape }}</a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</footer>

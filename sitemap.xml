@@ -1,0 +1,25 @@
+---
+layout: null
+permalink: /sitemap.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="utf-8"?>
+{%- comment -%}
+  List of crawlable URLs for search engines. A page opts out with
+  `sitemap: false` in its front matter.
+{%- endcomment %}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for post in site.posts %}
+  <url>
+    <loc>{{ post.url | absolute_url }}</loc>
+    <lastmod>{{ post.updated | default: post.date | date_to_xmlschema }}</lastmod>
+  </url>
+  {%- endfor %}
+  {%- for p in site.html_pages %}
+  {%- unless p.sitemap == false %}
+  <url>
+    <loc>{{ p.url | absolute_url }}</loc>
+  </url>
+  {%- endunless %}
+  {%- endfor %}
+</urlset>

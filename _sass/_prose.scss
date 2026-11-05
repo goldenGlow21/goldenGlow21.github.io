@@ -1,0 +1,155 @@
+// Markdown output inside `.prose`: post bodies, pages, and the home intro.
+// Kramdown emits plain elements, so they are styled by element name here.
+// `:where()` gives the wrapper zero specificity, so a component class such as
+// `.post-list` placed inside a page always overrides these element defaults.
+
+:where(.prose) {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin: 2.5rem 0 1rem;
+    line-height: 1.4;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  h4 {
+    font-size: 1.0625rem;
+  }
+
+  p,
+  ul,
+  ol,
+  blockquote,
+  table,
+  figure,
+  pre {
+    margin: 0 0 1.25rem;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.5rem;
+  }
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+
+  hr {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  blockquote {
+    padding: 0.25rem 1rem;
+    border-left: 3px solid var(--border);
+    color: var(--muted);
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // Callouts: a blockquote followed by `{: .note}` or `{: .warning}`.
+  blockquote.note,
+  blockquote.warning {
+    color: var(--fg);
+    background: var(--surface);
+  }
+
+  blockquote.note {
+    border-left-color: var(--note);
+  }
+
+  blockquote.warning {
+    border-left-color: var(--warning);
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  th {
+    background: var(--surface);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+
+  // Inline code only; code blocks are reset below.
+  :not(pre) > code {
+    padding: 0.125em 0.375em;
+    border-radius: 4px;
+    background: var(--surface);
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    line-height: 1.6;
+    word-break: normal;
+  }
+
+  // Kramdown wraps highlighted blocks in two divs; only the <pre> is styled.
+  div.highlighter-rouge,
+  div.highlight {
+    margin: 0;
+  }
+
+  // Footnotes, and the table of contents produced by `{:toc}`.
+  .footnotes {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  #markdown-toc {
+    padding: 1rem 1rem 1rem 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9375rem;
+  }
+}

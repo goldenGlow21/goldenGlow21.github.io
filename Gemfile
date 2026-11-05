@@ -2,13 +2,15 @@
 
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 7.5"
+# Jekyll is the only runtime dependency. Layouts, the feed, the sitemap and the
+# tag index are plain Liquid templates in this repository, so no theme gem or
+# plugin is needed.
+gem "jekyll", "4.4.1"
 
-gem "html-proofer", "~> 5.0", group: :test
-
-platforms :windows, :jruby do
-  gem "tzinfo", ">= 1", "< 3"
-  gem "tzinfo-data"
+group :test do
+  # Checks the built site for broken internal links and images in CI.
+  gem "html-proofer", "5.0.10"
 end
 
-gem "wdm", "~> 0.2.0", :platforms => [:windows]
+# Windows has no system zoneinfo database; Jekyll needs it for `timezone`.
+gem "tzinfo-data", platforms: [:windows]

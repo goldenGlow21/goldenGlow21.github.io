@@ -1,0 +1,12 @@
+{%- comment -%}
+  Tags of a post, each linking to its section on the tag index page (tags.html).
+  The anchor must be built with the same `slugify` call as the section ids there.
+  Usage: {% include tag-links.html tags=page.tags %}
+{%- endcomment -%}
+{%- if include.tags.size > 0 %}
+<ul class="tag-links">
+  {%- for tag in include.tags %}
+  <li><a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag | escape }}</a></li>
+  {%- endfor %}
+</ul>
+{%- endif %}

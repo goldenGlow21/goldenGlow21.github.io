@@ -1,0 +1,13 @@
+{%- comment -%}
+  Site title and the menu defined in _data/navigation.yml.
+{%- endcomment -%}
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+    <nav class="site-nav">
+      {%- for item in site.data.navigation %}
+      <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title | escape }}</a>
+      {%- endfor %}
+    </nav>
+  </div>
+</header>

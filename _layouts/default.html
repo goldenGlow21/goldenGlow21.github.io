@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{%- comment -%}
+  Page shell shared by every other layout: head, header, main column, footer.
+{%- endcomment %}
+<html lang="{{ site.lang }}">
+<head>
+{% include head.html %}
+</head>
+<body>
+{% include site-header.html %}
+<main class="container">
+{{ content }}
+</main>
+{% include site-footer.html %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Contents of <head>. The description falls back from the page's own
+  `description` to its first paragraph to the site description, because search
+  engines and link previews show whichever one is present.
+{%- endcomment -%}
+{%- if page.title and page.title != site.title -%}
+  {%- assign full_title = page.title | append: " | " | append: site.title -%}
+{%- else -%}
+  {%- assign full_title = site.title -%}
+{%- endif -%}
+{%- assign description = page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ full_title | escape }}</title>
+{%- if description != "" %}
+<meta name="description" content="{{ description | escape }}">
+<meta property="og:description" content="{{ description | escape }}">
+{%- endif %}
+<meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+<meta property="og:type" content="{% if page.collection == 'posts' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title | escape }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">

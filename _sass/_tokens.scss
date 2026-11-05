@@ -1,0 +1,55 @@
+// Design tokens: every color, font and width used by the other partials.
+// Dark mode follows the reader's operating system setting and only swaps
+// these values, so a palette change happens in this file alone.
+
+:root {
+  color-scheme: light dark;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo",
+    "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "D2Coding",
+    monospace;
+
+  --measure: 44rem;
+  --space: 1.5rem;
+
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #1d4ed8;
+  --surface: #f6f7f9;
+  --note: #2563eb;
+  --warning: #c2410c;
+
+  --syn-comment: #6b7280;
+  --syn-keyword: #a626a4;
+  --syn-string: #2f7d32;
+  --syn-number: #b45309;
+  --syn-name: #1d4ed8;
+  --syn-type: #0e7490;
+  --syn-deleted: #b91c1c;
+  --syn-inserted: #15803d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17191d;
+    --fg: #e4e6ea;
+    --muted: #9aa0a9;
+    --border: #2d3138;
+    --accent: #7aa2f7;
+    --surface: #1f2227;
+    --note: #7aa2f7;
+    --warning: #f0a35e;
+
+    --syn-comment: #8b929c;
+    --syn-keyword: #c792ea;
+    --syn-string: #a5d6a7;
+    --syn-number: #f5b971;
+    --syn-name: #82aaff;
+    --syn-type: #7fdbca;
+    --syn-deleted: #f28b82;
+    --syn-inserted: #8fd19e;
+  }
+}

@@ -1,0 +1,26 @@
+---
+layout: page
+title: Tags
+permalink: /tags/
+---
+{%- comment -%}
+  Every tag in alphabetical order with its posts. Section ids use `slugify`,
+  the same call tag-links.html uses to build the links into this page.
+{%- endcomment -%}
+{%- assign tags = site.tags | sort -%}
+{%- if tags.size == 0 %}
+<p class="empty">No tags yet.</p>
+{%- else %}
+<ul class="tag-links tag-index">
+  {%- for tag in tags %}
+  <li><a href="#{{ tag[0] | slugify }}">#{{ tag[0] | escape }}</a> <span class="count">{{ tag[1].size }}</span></li>
+  {%- endfor %}
+</ul>
+{%- for tag in tags %}
+{%- assign tag_posts = tag[1] %}
+<section class="tag-section" id="{{ tag[0] | slugify }}">
+  <h2>#{{ tag[0] | escape }}</h2>
+  {% include post-list.html posts=tag_posts %}
+</section>
+{%- endfor %}
+{%- endif %}

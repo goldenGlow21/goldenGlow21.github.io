@@ -1,0 +1,90 @@
+// Colors for code blocks highlighted by Rouge. Rouge marks each token with a
+// short class: c* comments, k* keywords, s* strings, m* numbers, n* names,
+// g* diff lines. Unlisted tokens keep the normal text color.
+
+.highlight {
+  .c,
+  .c1,
+  .cm,
+  .cs,
+  .cd,
+  .ch,
+  .cpf {
+    color: var(--syn-comment);
+    font-style: italic;
+  }
+
+  .k,
+  .kc,
+  .kd,
+  .kn,
+  .kp,
+  .kr,
+  .ow,
+  .cp {
+    color: var(--syn-keyword);
+  }
+
+  .s,
+  .s1,
+  .s2,
+  .sa,
+  .sb,
+  .sc,
+  .sd,
+  .se,
+  .sh,
+  .si,
+  .sr,
+  .ss,
+  .sx {
+    color: var(--syn-string);
+  }
+
+  .m,
+  .mb,
+  .mf,
+  .mh,
+  .mi,
+  .il,
+  .mo {
+    color: var(--syn-number);
+  }
+
+  .nf,
+  .fm,
+  .nb,
+  .bp,
+  .na,
+  .nt,
+  .nv,
+  .vi,
+  .vg {
+    color: var(--syn-name);
+  }
+
+  .nc,
+  .nn,
+  .kt,
+  .ne {
+    color: var(--syn-type);
+  }
+
+  .gd {
+    color: var(--syn-deleted);
+  }
+
+  .gi {
+    color: var(--syn-inserted);
+  }
+
+  .gh,
+  .gu {
+    color: var(--syn-comment);
+    font-weight: 700;
+  }
+
+  .err {
+    color: var(--syn-deleted);
+  }
+}

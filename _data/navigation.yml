@@ -1,0 +1,6 @@
+# Header menu, in display order. The site title on the left always links to
+# the post list, so it is not repeated here.
+- title: Tags
+  url: /tags/
+- title: About
+  url: /about/
