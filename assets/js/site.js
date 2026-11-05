@@ -1,6 +1,7 @@
 // Page enhancements. Every page is complete without this script; it adds
 // the light/dark toggle, the giscus comment thread, a language label and
-// copy button on code blocks, and "#" links on headings.
+// copy button on code blocks, the outline beside a post, and "#" links on
+// headings.
 
 (function () {
   "use strict";
@@ -117,6 +118,62 @@
     }, 1600);
   }
 
+  // Fills the outline aside of a post (_layouts/post.html) with its h2 and
+  // h3 headings, and marks the section being read. Kramdown gives every
+  // heading an id, which the links point to. Runs before the "#" anchors are
+  // appended, so the link text is the heading text alone.
+  function setupToc() {
+    var toc = document.querySelector(".post-toc");
+    if (!toc) return;
+    var headings = document.querySelectorAll(".prose h2[id], .prose h3[id]");
+    if (headings.length < 2) return;
+
+    var list = toc.querySelector("ol");
+    var links = Array.prototype.map.call(headings, function (heading) {
+      var item = document.createElement("li");
+      item.className = "toc-" + heading.tagName.toLowerCase();
+      var link = document.createElement("a");
+      link.href = "#" + encodeURIComponent(heading.id);
+      link.textContent = heading.textContent;
+      item.appendChild(link);
+      list.appendChild(item);
+      return link;
+    });
+    toc.hidden = false;
+    toc.parentElement.classList.add("has-toc");
+
+    // The current section is the last heading scrolled past the header. At
+    // the bottom of the page the last sections may be too short to reach
+    // that line, so the last heading counts as current there.
+    var offset = parseFloat(getComputedStyle(root).fontSize) * 6;
+    var active = null;
+    function markCurrent() {
+      var index = -1;
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top - offset > 0) break;
+        index = i;
+      }
+      if (window.innerHeight + window.scrollY >= root.scrollHeight - 2) {
+        index = headings.length - 1;
+      }
+      var next = links[Math.max(index, 0)];
+      if (next === active) return;
+      if (active) active.removeAttribute("aria-current");
+      next.setAttribute("aria-current", "true");
+      active = next;
+    }
+    var pending = false;
+    window.addEventListener("scroll", function () {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(function () {
+        pending = false;
+        markCurrent();
+      });
+    }, { passive: true });
+    markCurrent();
+  }
+
   // Kramdown gives every heading an id; the link makes a section shareable.
   function setupHeadingAnchors() {
     var headings = document.querySelectorAll(".prose h2[id], .prose h3[id], .prose h4[id]");
@@ -134,6 +191,7 @@
     setupThemeToggle();
     loadGiscus();
     setupCodeBlocks();
+    setupToc();
     setupHeadingAnchors();
   }
 

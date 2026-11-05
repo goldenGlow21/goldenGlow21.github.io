@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 {%- comment -%}
-  Page shell shared by every other layout: head, header, main column, footer.
+  Page shell shared by every other layout: head, header, main area, footer.
+  Each layout sets its own column width inside <main>; the body class names
+  the layout so a style can tell the front page from the rest.
 {%- endcomment %}
 <html lang="{{ site.lang }}">
 <head>
 {% include head.html %}
 </head>
-<body>
+<body class="layout-{{ page.layout | default: 'none' }}">
 {% include site-header.html %}
-<main class="container">
+<main class="site-main">
 {{ content }}
 </main>
 {% include site-footer.html %}

@@ -1,10 +1,15 @@
-# Footer links, in display order. A `url` starting with "/" is a path on this
-# site; anything else (https:, mailto:) is used as written.
+# Profile links, shown on the front page and in the footer, in display order.
+# A `url` starting with "/" is a path on this site; anything else (https:,
+# mailto:) is used as written. `icon` names an icon in _includes/icon.html.
 - title: GitHub
   url: https://github.com/goldenGlow21
+  icon: github
 - title: LinkedIn
   url: https://www.linkedin.com/in/jonghoon-lee-882a05372/
+  icon: linkedin
 - title: Email
   url: mailto:jonghoon8928@gmail.com
+  icon: mail
 - title: RSS
   url: /feed.xml
+  icon: rss

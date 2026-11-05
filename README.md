@@ -2,86 +2,56 @@
 
 Personal blog, built by Jekyll and deployed to GitHub Pages by GitHub Actions
 on every push to `main`. The theme is the handful of templates in this
-repository; there is no theme gem and no Jekyll plugin.
+repository; there is no theme gem and no plugin.
 
 ## Writing a post
 
-```bash
-python tools/post.py new example-post -t "Example post" --tags tag1,tag2
+Create a Markdown file in `_posts/` named `YYYY-MM-DD-slug.md`, then commit
+and push. The post is live once the Actions run finishes.
+
+```markdown
+---
+title: CVE-2025-12345 heap overflow PoC
+tags: [poc, linux]
+---
+Body in Markdown, pasted from Notion or written directly.
 ```
 
-This writes `_posts/YYYY-MM-DD-example-post.md` dated now. Write the
-body under the front matter, commit, and push. The post appears at
-`/posts/example-post/`.
+- The date in the file name is the publish date; the slug after it gives the
+  URL, `/posts/<slug>/`.
+- The first paragraph is the summary on the post lists and in link previews.
+- Images go in `assets/img/` and are linked by site path:
+  `![shot](/assets/img/cve-2025-12345/crash.png)`.
+- `{{ }}` and `{% %}` inside a post are printed as written, so template
+  injection payloads show up intact.
 
-To work on something over several days without publishing it:
+Optional front matter fields:
 
-```bash
-python tools/post.py new half-done-idea --draft
-python tools/post.py publish half-done-idea
-```
+| Field | Meaning |
+|---|---|
+| `description` | Summary used instead of the first paragraph. |
+| `updated` | Revision date shown next to the publish date, for example `2026-11-20`. |
+| `comments` | `false` hides the comment thread on this post. |
+| `published` | `false` keeps the post off the site. |
 
-The first command writes `_drafts/half-done-idea.md`, which the live site never
-builds. The second moves it to `_posts/` and sets its date to now.
+What the post body supports:
 
-The slug is the URL name and the image folder name, so it is limited to
-lowercase ASCII letters, digits and hyphens, so a CVE id is written as
-`cve-2025-12345`. The title can be anything.
+- Code blocks with a language name are highlighted and get a header with the
+  language name and a copy button.
+- On wide screens a post with two or more `##` / `###` headings gets an
+  outline beside the text that follows the reader's position.
+- `> text` followed by `{: .note}` or `{: .warning}` on the next line gives a
+  note or warning box.
+- `* TOC` followed by `{:toc}` inserts a table of contents in the body.
 
-### Front matter
+## Pages
 
-| Field | Required | Meaning |
+| URL | Source | Content |
 |---|---|---|
-| `title` | yes | Post title. |
-| `date` | yes | Publish time. Orders posts and is shown under the title. |
-| `tags` | no | List of tags, for example `[tag1, tag2]`. Each tag gets a section on `/tags/`. |
-| `description` | no | One line for search results and link previews. Empty means the first paragraph is used. |
-| `updated` | no | Date of a later revision, for example `2026-12-01`. Shown next to the publish date. |
-| `comments` | no | `false` hides the comment thread on this post. |
-
-### Images
-
-Put image files in `assets/posts/<slug>/`, then either use plain Markdown:
-
-```markdown
-![Diagram](/assets/posts/example-post/diagram.png)
-```
-
-or the figure include, which takes a bare file name and adds a caption:
-
-```liquid
-{% include figure.html src="diagram.png" alt="Diagram" caption="Caption text" %}
-```
-
-### Other Markdown features
-
-Code blocks with a language name are highlighted and get a header with the
-language name and a copy button:
-
-````markdown
-```python
-print("hello")
-```
-````
-
-A note or warning box is a blockquote with a class on the next line:
-
-```markdown
-> Note text.
-{: .note}
-
-> Warning text.
-{: .warning}
-```
-
-A table of contents of the post's headings:
-
-```markdown
-* TOC
-{:toc}
-```
-
-Footnotes use `text[^1]` and, anywhere below, `[^1]: The note.`
+| `/` | `index.md`, `_layouts/home.html` | Banner with the site title and links, newest posts, tags, years. Text written in `index.md` appears under the title. |
+| `/posts/` | `posts.html` | Every post, grouped by year. |
+| `/tags/` | `tags.html` | Every tag with its posts. |
+| `/about/` | `about.md` | Free text. |
 
 ## Previewing locally
 
@@ -90,13 +60,13 @@ and Bundler:
 
 ```bash
 bundle install
-bundle exec jekyll serve --drafts
+bundle exec jekyll serve
 ```
 
 Without a Ruby install, Docker runs the same thing:
 
 ```bash
-docker run --rm -it -p 4000:4000 -v "${PWD}:/srv/site" -w /srv/site ruby:3.4 sh -c "bundle install && bundle exec jekyll serve --drafts --host 0.0.0.0 --force_polling"
+docker run --rm -it -p 4000:4000 -v "${PWD}:/srv/site" -w /srv/site ruby:3.4 sh -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --force_polling"
 ```
 
 The site is then at http://localhost:4000 and rebuilds when a file changes.
@@ -107,46 +77,42 @@ gems again on every start, which takes about a minute.
 ## Where things are
 
 ```
-_config.yml           site title, description, author, comment settings
+_posts/               posts, one Markdown file each
+assets/img/           images used by posts
+_config.yml           site title, author, comment settings, post defaults
 _data/navigation.yml  header menu
-_data/links.yml       footer links
-index.md              front page; text written here appears above the post list
-about.md              About page
+_data/links.yml       profile links on the front page and in the footer
+index.md              front page; text written here appears under the title
+posts.html            post archive at /posts/
 tags.html             tag index at /tags/
+about.md              About page
 404.html              page for unknown URLs
 feed.xml              Atom feed at /feed.xml
 sitemap.xml           sitemap for search engines
 robots.txt            crawler rules, points to the sitemap
-_posts/               published posts, YYYY-MM-DD-<slug>.md
-_drafts/              unpublished drafts, <slug>.md
-assets/posts/<slug>/  images and files used by one post
-assets/css/main.scss  stylesheet entry point; imports the partials in _sass/
-assets/js/site.js     theme toggle, comment loader, code copy buttons, heading links
 _layouts/             page shells: default (frame), home, post, page
 _includes/            pieces used by the layouts, one file per piece
-_sass/                styles: tokens (colors, fonts), base, layout, lists, prose, code, syntax
-tools/post.py         creates posts and drafts, publishes drafts
+_sass/                styles: tokens (colors, fonts, widths), base, layout,
+                      lists, home, prose, code, syntax
+assets/css/main.scss  stylesheet entry point; imports the partials in _sass/
+assets/js/site.js     theme toggle, comments, code copy buttons, post outline,
+                      heading links
 .github/workflows/    build, link check, and deploy to GitHub Pages
 ```
 
 Common changes:
 
-- Colors and fonts: `_sass/_tokens.scss`, which holds a light and a dark
-  palette. A page follows the reader's system setting until the reader picks
-  a theme with the header toggle; the choice is stored in the browser.
+- Colors, fonts and column widths: `_sass/_tokens.scss`, which holds a light
+  and a dark palette. A page follows the reader's system setting until the
+  reader picks a theme with the header toggle; the choice is stored in the
+  browser.
 - The typeface is Pretendard, loaded from the jsDelivr CDN in
   `_includes/head.html`.
 - A new header menu entry: add a page with a `permalink`, then add it to
   `_data/navigation.yml`.
+- A new profile link: add it to `_data/links.yml`; its `icon` must be one of
+  the names in `_includes/icon.html`.
 - Turning comments off everywhere: empty `giscus.repo` in `_config.yml`.
 
-## Tests
-
-The post tool has unit tests:
-
-```bash
-python -m unittest discover tools
-```
-
-The CI build runs `htmlproofer` over the generated site and fails on broken
-internal links or missing images.
+CI runs `htmlproofer` over the generated site and fails on broken internal
+links or missing images.

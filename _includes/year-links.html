@@ -1,0 +1,12 @@
+{%- comment -%}
+  One link per year that has posts, with the number of posts that year. Each
+  link jumps to the year's section on the archive page (posts.html), whose
+  ids are built the same way: "year-" followed by the year.
+  Usage: {% include year-links.html posts=site.posts class="year-list" %}
+{%- endcomment -%}
+{%- assign years = include.posts | group_by_exp: "post", "post.date | date: '%Y'" -%}
+<ul class="year-links {{ include.class }}">
+  {%- for year in years %}
+  <li><a href="{{ '/posts/' | relative_url }}#year-{{ year.name }}"><span class="year">{{ year.name }}</span><span class="count">{{ year.size }}</span></a></li>
+  {%- endfor %}
+</ul>

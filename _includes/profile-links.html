@@ -1,0 +1,15 @@
+{%- comment -%}
+  The links in _data/links.yml as round icon buttons. With `labels=true` each
+  button also shows its title, except on narrow screens; the aria-label keeps
+  the title available to screen readers either way.
+  Usage: {% include profile-links.html class="hero-links" labels=true %}
+{%- endcomment -%}
+<ul class="profile-links {{ include.class }}">
+  {%- for link in site.data.links %}
+  {%- assign first_char = link.url | slice: 0 %}
+  <li><a href="{% if first_char == '/' %}{{ link.url | relative_url }}{% else %}{{ link.url }}{% endif %}" aria-label="{{ link.title | escape }}"{% unless include.labels %} title="{{ link.title | escape }}"{% endunless %}>
+    {%- include icon.html name=link.icon -%}
+    {%- if include.labels %}<span>{{ link.title | escape }}</span>{% endif -%}
+  </a></li>
+  {%- endfor %}
+</ul>

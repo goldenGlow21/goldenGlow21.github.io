@@ -1,31 +1,6 @@
-// Everything that lists posts or tags outside a post body: year groups and
-// post cards on the front page, tag chips, the tag index, and the
-// previous/next cards under a post.
-
-// Year groups
-
-.post-year + .post-year {
-  margin-top: 3rem;
-}
-
-.post-year-title {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 0 0 0.75rem;
-  color: var(--faint);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  font-variant-numeric: tabular-nums;
-
-  &::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-}
+// Everything that lists posts, tags or years outside a post body: the
+// featured card and post cards, the archive rows, year links, tag chips,
+// the tag index, and the previous/next cards under a post.
 
 // Post cards. The negative margin lets the hover background extend past
 // the text column while the text itself stays aligned with the headings.
@@ -39,18 +14,95 @@
   list-style: none;
 }
 
-// These lists also appear inside `.prose` (the tag index page), so they
-// reset the list item spacing and link underline that prose applies.
+// These lists also appear inside `.prose` (the tag index and the archive),
+// so they reset the list item spacing and link underline that prose applies.
 .post-items > li,
+.archive-items > li,
+.year-links > li,
 .tag-chips > li {
   margin: 0;
   padding: 0;
 }
 
 .post-item,
+.archive-item-title,
+.year-links a,
 .tag-chip,
 .post-nav a {
   text-decoration: none;
+}
+
+// Featured card: the newest post on the front page. A gold rule along the
+// top edge sets it apart from the plain cards below it.
+
+.post-feature {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 1.75rem 2rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow);
+  color: inherit;
+  transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-bright), transparent 85%);
+  }
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--accent-bright) 55%, var(--border));
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-2px);
+
+    .post-feature-title {
+      color: var(--accent);
+    }
+  }
+}
+
+.post-feature-label {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-feature-title {
+  margin: 0.875rem 0 0;
+  color: var(--fg);
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+  font-weight: 750;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  transition: color var(--ease);
+}
+
+.post-feature-summary {
+  display: -webkit-box;
+  margin: 0.75rem 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.post-feature .post-item-meta {
+  margin-top: 1rem;
 }
 
 .post-item {
@@ -150,6 +202,154 @@
   }
 }
 
+// Year links (_includes/year-links.html). `year-list` is the sidebar
+// column on the front page, `year-chips` the row atop the archive.
+
+.year-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    color: var(--fg-soft);
+    font-variant-numeric: tabular-nums;
+    transition: color var(--ease), border-color var(--ease), background-color var(--ease);
+  }
+
+  .count {
+    color: var(--faint);
+    font-size: 0.8125rem;
+  }
+}
+
+.year-list {
+  a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  > li:first-child a {
+    border-top: 1px solid var(--border);
+  }
+}
+
+.year-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-raised);
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    &:hover {
+      border-color: var(--accent-bright);
+      background: var(--accent-soft);
+      color: var(--fg);
+    }
+  }
+}
+
+// Archive page (posts.html): a section per year, one row per post with the
+// date beside the title and the tag chips under it. The date column has a
+// fixed width so the titles of a year line up.
+
+.archive-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.archive-total {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.archive-year + .archive-year {
+  margin-top: 3rem;
+}
+
+.archive-year-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin: 0 0 0.75rem;
+  color: var(--fg);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+
+  .count {
+    color: var(--faint);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+}
+
+.archive-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.archive-item {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0 1.125rem;
+  border-bottom: 1px dashed var(--border);
+
+  time {
+    color: var(--faint);
+    font-size: 0.875rem;
+  }
+
+  .tag-chips {
+    grid-column: 2;
+    gap: 0.375rem;
+  }
+
+  .tag-chip {
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+.archive-item-title {
+  color: var(--fg);
+  font-weight: 600;
+  line-height: 1.5;
+  transition: color var(--ease);
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
 // Tag index page
 
 .tag-index {
@@ -213,6 +413,14 @@
 }
 
 @media (max-width: 30rem) {
+  .archive-item {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .post-feature {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
   .post-items {
     margin: 0 -0.75rem;
   }

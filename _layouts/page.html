@@ -2,9 +2,10 @@
 layout: default
 ---
 {%- comment -%}
-  Standalone page that is not part of the post timeline, such as About.
+  Standalone page that is not part of the post timeline, such as About,
+  the tag index and the post archive.
 {%- endcomment %}
-<article class="page">
+<article class="container container-narrow page">
   <h1 class="page-title">{{ page.title | escape }}</h1>
   <div class="prose">
 {{ content }}

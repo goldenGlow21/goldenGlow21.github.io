@@ -2,10 +2,73 @@
 layout: default
 ---
 {%- comment -%}
-  Front page: the optional text written in index.md, then every post, newest first.
+  Front page. A banner with the site title, the optional text written in
+  index.md, the profile links and a few counts; below it the newest posts
+  beside the tag list and the per-year archive. The full list is /posts/.
 {%- endcomment -%}
 {%- assign intro = content | strip -%}
-{%- if intro != "" %}
-<div class="prose home-intro">{{ intro }}</div>
-{%- endif %}
-{% include post-list.html posts=site.posts %}
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="hero-mark" aria-hidden="true"></span>
+    <h1 class="hero-title">{{ site.title | escape }}</h1>
+    {%- if intro != "" %}
+    <div class="prose hero-intro">{{ intro }}</div>
+    {%- endif %}
+    {% include profile-links.html class="hero-links" labels=true %}
+    {%- if site.posts.size > 0 %}
+    <dl class="hero-stats">
+      <div><dt>Posts</dt><dd>{{ site.posts.size }}</dd></div>
+      <div><dt>Tags</dt><dd>{{ site.tags.size }}</dd></div>
+      <div><dt>Latest</dt><dd><time datetime="{{ site.posts.first.date | date_to_xmlschema }}">{{ site.posts.first.date | date: "%Y.%m.%d" }}</time></dd></div>
+    </dl>
+    {%- endif %}
+  </div>
+</section>
+
+<div class="container home-body{% if site.posts.size == 0 %} is-empty{% endif %}">
+  <section class="home-section home-recent">
+    <header class="section-head">
+      <h2 class="section-title">Recent posts</h2>
+      {%- if site.posts.size > 0 %}
+      <a class="section-more" href="{{ '/posts/' | relative_url }}">All posts{% include icon.html name="arrow-right" %}</a>
+      {%- endif %}
+    </header>
+    {%- if site.posts.size == 0 %}
+    <p class="empty">No posts yet.</p>
+    {%- else %}
+    {% include post-feature.html post=site.posts.first %}
+    {%- if site.posts.size > 1 %}
+    <ul class="post-items">
+      {%- for post in site.posts offset: 1 limit: 5 %}
+      <li>{% include post-item.html post=post %}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+    {%- endif %}
+  </section>
+
+  {%- if site.posts.size > 0 %}
+  <aside class="home-side">
+    {%- assign tags = site.tags | sort %}
+    {%- if tags.size > 0 %}
+    <section class="home-section">
+      <header class="section-head">
+        <h2 class="section-title">Tags</h2>
+        <a class="section-more" href="{{ '/tags/' | relative_url }}">All{% include icon.html name="arrow-right" %}</a>
+      </header>
+      <ul class="tag-chips">
+        {%- for tag in tags %}
+        <li><a class="tag-chip" href="{{ '/tags/' | relative_url }}#{{ tag[0] | slugify }}">{{ tag[0] | escape }}<span class="count">{{ tag[1].size }}</span></a></li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endif %}
+    <section class="home-section">
+      <header class="section-head">
+        <h2 class="section-title">Archive</h2>
+      </header>
+      {% include year-links.html posts=site.posts class="year-list" %}
+    </section>
+  </aside>
+  {%- endif %}
+</div>

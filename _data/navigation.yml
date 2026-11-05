@@ -1,5 +1,7 @@
-# Header menu, in display order. The site title on the left always links to
-# the post list, so it is not repeated here.
+# Header menu, in display order. The site title on the left links to the
+# front page, so it is not repeated here.
+- title: Posts
+  url: /posts/
 - title: Tags
   url: /tags/
 - title: About

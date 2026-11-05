@@ -20,6 +20,10 @@
   --note: #2f6fb0;
   --warning: #c05621;
   --shadow: 0 1px 2px rgba(60, 50, 30, 0.05), 0 4px 16px rgba(60, 50, 30, 0.06);
+  --shadow-lift: 0 2px 4px rgba(60, 50, 30, 0.06), 0 12px 32px rgba(60, 50, 30, 0.1);
+  // Front page banner: the dot grid and the golden glow behind the title.
+  --grid-dot: rgba(80, 64, 32, 0.16);
+  --glow: rgba(224, 168, 56, 0.26);
 
   --syn-comment: #8a8478;
   --syn-keyword: #a23b72;
@@ -48,6 +52,9 @@
   --note: #7fb0e8;
   --warning: #f0a35e;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
+  --grid-dot: rgba(255, 236, 200, 0.09);
+  --glow: rgba(230, 182, 92, 0.16);
 
   --syn-comment: #7d776d;
   --syn-keyword: #e08fb3;
@@ -68,7 +75,10 @@
   --font-mono: ui-monospace, "Cascadia Code", "SF Mono", "D2Coding", Consolas,
     monospace;
 
+  // Reading column for post and page text, and the wider frame used by
+  // the header, the footer and the front page.
   --measure: 44rem;
+  --wide: 68rem;
   --gutter: 1.5rem;
   --header-height: 3.75rem;
   --radius: 10px;

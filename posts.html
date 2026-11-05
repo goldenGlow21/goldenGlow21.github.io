@@ -1,0 +1,33 @@
+---
+layout: page
+title: Posts
+permalink: /posts/
+---
+{%- comment -%}
+  Every post, grouped by year, newest first: one compact row per post with
+  its date, title and tags. Year sections have the ids year-links.html
+  points to.
+{%- endcomment -%}
+{%- if site.posts.size == 0 %}
+<p class="empty">No posts yet.</p>
+{%- else %}
+{%- assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+<div class="archive-head">
+  <p class="archive-total">{{ site.posts.size }} {% if site.posts.size == 1 %}post{% else %}posts{% endif %}</p>
+  {% include year-links.html posts=site.posts class="year-chips" %}
+</div>
+{%- for year in years %}
+<section class="archive-year" id="year-{{ year.name }}">
+  <h2 class="archive-year-title">{{ year.name }}<span class="count">{{ year.size }}</span></h2>
+  <ul class="archive-items">
+    {%- for post in year.items %}
+    <li class="archive-item">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m.%d" }}</time>
+      <a class="archive-item-title" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+      {% include tag-links.html tags=post.tags %}
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}
+{%- endif %}

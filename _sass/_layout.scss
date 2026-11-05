@@ -1,16 +1,25 @@
-// Page frame: the text column, the sticky site header with the theme
-// toggle, the site footer, and the title blocks of posts and pages.
+// Page frame: the column widths, the sticky site header with the theme
+// toggle, the site footer, the post layout with its outline, and the title
+// blocks of posts and pages.
 
 .container {
-  max-width: calc(var(--measure) + 2 * var(--gutter));
+  max-width: calc(var(--wide) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 
-main.container {
-  min-height: calc(100vh - 12rem);
-  padding-top: 3.5rem;
-  padding-bottom: 5rem;
+.container-narrow {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+}
+
+.site-main {
+  min-height: calc(100vh - 14rem);
+  padding: 3.5rem 0 6rem;
+}
+
+// The front page banner starts right under the header.
+.layout-home .site-main {
+  padding-top: 0;
 }
 
 // Header
@@ -141,10 +150,49 @@ main.container {
   @include toggle-in-dark;
 }
 
+// Profile links (_includes/profile-links.html): round icon buttons. The
+// front page variant with labels is styled in _home.scss.
+
+.icon {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 2.375rem;
+    height: 2.375rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-raised);
+    color: var(--muted);
+    transition: color var(--ease), border-color var(--ease), box-shadow var(--ease);
+
+    &:hover {
+      border-color: var(--accent-bright);
+      color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+  }
+}
+
 // Footer
 
 .site-footer {
   border-top: 1px solid var(--border);
+  background: var(--surface);
   color: var(--muted);
   font-size: 0.875rem;
 }
@@ -154,26 +202,102 @@ main.container {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1.5rem;
-  padding-top: 2rem;
-  padding-bottom: 2.5rem;
+  gap: 1rem 1.5rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+// The rule above the copyright line spans the text, not the side padding.
+.site-footer-base {
+  position: relative;
+  padding-top: 1.25rem;
+  padding-bottom: 2.5rem;
+  color: var(--faint);
+  font-size: 0.8125rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: var(--gutter);
+    right: var(--gutter);
+    height: 1px;
+    background: var(--border);
+  }
+}
+
+// Post layout. Without an outline the post is one centered reading column.
+// site.js adds `has-toc` when it fills the outline, and on wide screens the
+// outline then becomes a sticky second column.
+
+.post-layout {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+}
+
+@media (min-width: 76rem) {
+  .post-layout.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) 13rem;
+    justify-content: center;
+    column-gap: 3.5rem;
+    max-width: calc(var(--wide) + 2 * var(--gutter));
+  }
+}
+
+@media (max-width: 75.99rem) {
+  .post-toc {
+    display: none;
+  }
+}
+
+.post-toc {
+  position: sticky;
+  top: calc(var(--header-height) + 2.5rem);
+  align-self: start;
+  max-height: calc(100vh - var(--header-height) - 5rem);
+  overflow-y: auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  ol {
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--border);
+    list-style: none;
+  }
 
   a {
+    display: block;
+    margin-left: -1px;
+    padding: 0.3125rem 0 0.3125rem 1rem;
+    border-left: 2px solid transparent;
     color: var(--muted);
+    transition: color var(--ease), border-color var(--ease);
 
     &:hover {
-      color: var(--accent);
+      color: var(--fg);
+    }
+
+    &[aria-current="true"] {
+      border-left-color: var(--accent-bright);
+      color: var(--fg);
+      font-weight: 600;
     }
   }
+
+  .toc-h3 a {
+    padding-left: 1.875rem;
+    font-size: 0.8125rem;
+  }
+}
+
+.post-toc-title {
+  margin: 0 0 0.75rem;
+  color: var(--faint);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 // Post and page headings
@@ -182,6 +306,29 @@ main.container {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--border);
+}
+
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--ease);
+  }
+
+  &:hover {
+    color: var(--accent);
+
+    .icon {
+      transform: translateX(-3px);
+    }
+  }
 }
 
 .post-title,
@@ -225,7 +372,8 @@ main.container {
 // 404
 
 .not-found {
-  padding: 4rem 0;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
   text-align: center;
 
   .not-found-code {
@@ -247,7 +395,7 @@ main.container {
     --gutter: 1.125rem;
   }
 
-  main.container {
+  .site-main {
     padding-top: 2.5rem;
   }
 

@@ -1,0 +1,20 @@
+{%- comment -%}
+  The newest post as a large card at the top of the front page: title, a
+  three line summary, date and tags. Like post-item.html, the whole card is
+  one link, so the tags are plain text.
+  Usage: {% include post-feature.html post=site.posts.first %}
+{%- endcomment -%}
+{%- assign summary = include.post.description | default: include.post.excerpt | strip_html | normalize_whitespace | truncate: 280 -%}
+<a class="post-feature" href="{{ include.post.url | relative_url }}">
+  <span class="post-feature-label">Latest</span>
+  <h3 class="post-feature-title">{{ include.post.title | escape }}</h3>
+  {%- if summary != "" %}
+  <p class="post-feature-summary">{{ summary | escape }}</p>
+  {%- endif %}
+  <div class="post-item-meta">
+    <time datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%Y-%m-%d" }}</time>
+    {%- for tag in include.post.tags %}
+    <span class="post-item-tag">#{{ tag | escape }}</span>
+    {%- endfor %}
+  </div>
+</a>

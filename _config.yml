@@ -41,7 +41,9 @@ defaults:
     values:
       layout: post
       permalink: /posts/:title/
+      # Print "{{ }}" and "{% %}" in a post as written. Liquid would otherwise
+      # execute them, which breaks template injection payloads in PoC code.
+      render_with_liquid: false
 
 exclude:
   - README.md
-  - tools
