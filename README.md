@@ -55,7 +55,8 @@ or the figure include, which takes a bare file name and adds a caption:
 
 ### Other Markdown features
 
-Code blocks with a language name are highlighted:
+Code blocks with a language name are highlighted and get a header with the
+language name and a copy button:
 
 ````markdown
 ```python
@@ -120,17 +121,21 @@ _posts/               published posts, YYYY-MM-DD-<slug>.md
 _drafts/              unpublished drafts, <slug>.md
 assets/posts/<slug>/  images and files used by one post
 assets/css/main.scss  stylesheet entry point; imports the partials in _sass/
+assets/js/site.js     theme toggle, comment loader, code copy buttons, heading links
 _layouts/             page shells: default (frame), home, post, page
 _includes/            pieces used by the layouts, one file per piece
-_sass/                styles: tokens (colors, fonts), base, layout, lists, prose, syntax
+_sass/                styles: tokens (colors, fonts), base, layout, lists, prose, code, syntax
 tools/post.py         creates posts and drafts, publishes drafts
 .github/workflows/    build, link check, and deploy to GitHub Pages
 ```
 
 Common changes:
 
-- Colors and fonts: `_sass/_tokens.scss`. Dark mode follows the reader's
-  system setting and uses the second block in that file.
+- Colors and fonts: `_sass/_tokens.scss`, which holds a light and a dark
+  palette. A page follows the reader's system setting until the reader picks
+  a theme with the header toggle; the choice is stored in the browser.
+- The typeface is Pretendard, loaded from the jsDelivr CDN in
+  `_includes/head.html`.
 - A new header menu entry: add a page with a `permalink`, then add it to
   `_data/navigation.yml`.
 - Turning comments off everywhere: empty `giscus.repo` in `_config.yml`.

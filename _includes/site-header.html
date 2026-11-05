@@ -1,13 +1,19 @@
 {%- comment -%}
-  Site title and the menu defined in _data/navigation.yml.
+  Site title, the menu defined in _data/navigation.yml, and the light/dark
+  toggle. The toggle starts hidden and site.js reveals it, because it does
+  nothing without the script.
 {%- endcomment -%}
 <header class="site-header">
   <div class="container site-header-inner">
-    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+    <a class="site-title" href="{{ '/' | relative_url }}"><span class="site-mark" aria-hidden="true"></span>{{ site.title | escape }}</a>
     <nav class="site-nav">
       {%- for item in site.data.navigation %}
       <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title | escape }}</a>
       {%- endfor %}
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" hidden>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+      </button>
     </nav>
   </div>
 </header>

@@ -1,24 +1,17 @@
 {%- comment -%}
-  giscus comment thread for the current post. Each page path maps to one
-  GitHub Discussion, which giscus creates on the first comment.
+  Mount point for the giscus comment thread of the current post. Each page
+  path maps to one GitHub Discussion, which giscus creates on the first
+  comment. site.js reads these attributes and loads giscus with the theme
+  that matches the page, so the thread follows the light/dark toggle.
   Configured under `giscus` in _config.yml.
 {%- endcomment -%}
 {%- if site.giscus.repo and site.giscus.repo != "" and page.comments != false %}
 <section class="comments">
-  <script src="https://giscus.app/client.js"
-          data-repo="{{ site.giscus.repo }}"
-          data-repo-id="{{ site.giscus.repo_id }}"
-          data-category="{{ site.giscus.category }}"
-          data-category-id="{{ site.giscus.category_id }}"
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
-          data-theme="preferred_color_scheme"
-          data-lang="{{ site.lang }}"
-          data-loading="lazy"
-          crossorigin="anonymous"
-          async></script>
+  <div class="giscus-mount"
+       data-repo="{{ site.giscus.repo }}"
+       data-repo-id="{{ site.giscus.repo_id }}"
+       data-category="{{ site.giscus.category }}"
+       data-category-id="{{ site.giscus.category_id }}"
+       data-lang="{{ site.lang }}"></div>
 </section>
 {%- endif %}

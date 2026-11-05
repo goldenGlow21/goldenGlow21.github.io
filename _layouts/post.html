@@ -2,7 +2,7 @@
 layout: default
 ---
 {%- comment -%}
-  A single post: title and dates, body, tags, links to the neighbouring posts, comments.
+  A single post: title, dates and tags, body, links to the neighbouring posts, comments.
 {%- endcomment %}
 <article class="post">
   <header class="post-header">
@@ -13,7 +13,6 @@ layout: default
 {{ content }}
   </div>
   <footer class="post-footer">
-    {% include tag-links.html tags=page.tags %}
     {% include post-nav.html %}
   </footer>
 </article>

@@ -11,16 +11,19 @@ permalink: /tags/
 {%- if tags.size == 0 %}
 <p class="empty">No tags yet.</p>
 {%- else %}
-<ul class="tag-links tag-index">
+<ul class="tag-chips tag-index">
   {%- for tag in tags %}
-  <li><a href="#{{ tag[0] | slugify }}">#{{ tag[0] | escape }}</a> <span class="count">{{ tag[1].size }}</span></li>
+  <li><a class="tag-chip" href="#{{ tag[0] | slugify }}">{{ tag[0] | escape }} <span class="count">{{ tag[1].size }}</span></a></li>
   {%- endfor %}
 </ul>
 {%- for tag in tags %}
-{%- assign tag_posts = tag[1] %}
 <section class="tag-section" id="{{ tag[0] | slugify }}">
-  <h2>#{{ tag[0] | escape }}</h2>
-  {% include post-list.html posts=tag_posts %}
+  <h2 class="tag-section-title">{{ tag[0] | escape }}</h2>
+  <ul class="post-items">
+    {%- for post in tag[1] %}
+    <li>{% include post-item.html post=post %}</li>
+    {%- endfor %}
+  </ul>
 </section>
 {%- endfor %}
 {%- endif %}

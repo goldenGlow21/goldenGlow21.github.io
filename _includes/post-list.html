@@ -1,16 +1,19 @@
 {%- comment -%}
-  List of posts, one line each: date and title.
+  Posts grouped under a heading per year, newest first.
   Usage: {% include post-list.html posts=site.posts %}
 {%- endcomment -%}
 {%- if include.posts.size == 0 %}
 <p class="empty">No posts yet.</p>
 {%- else %}
-<ul class="post-list">
-  {%- for post in include.posts %}
-  <li>
-    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-    <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-  </li>
-  {%- endfor %}
-</ul>
+{%- assign years = include.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{%- for year in years %}
+<section class="post-year">
+  <h2 class="post-year-title">{{ year.name }}</h2>
+  <ul class="post-items">
+    {%- for post in year.items %}
+    <li>{% include post-item.html post=post %}</li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}
 {%- endif %}

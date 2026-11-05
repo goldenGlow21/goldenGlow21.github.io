@@ -1,14 +1,14 @@
 {%- comment -%}
-  Links to the chronologically adjacent posts. Jekyll's `page.previous` is the
-  older post and `page.next` the newer one.
+  Cards linking to the chronologically adjacent posts. Jekyll's
+  `page.previous` is the older post and `page.next` the newer one.
 {%- endcomment -%}
 {%- if page.previous or page.next %}
-<nav class="post-nav">
+<nav class="post-nav" aria-label="More posts">
   {%- if page.previous %}
-  <a class="post-nav-older" href="{{ page.previous.url | relative_url }}"><span>Older</span>{{ page.previous.title | escape }}</a>
+  <a class="post-nav-older" href="{{ page.previous.url | relative_url }}"><span>Previous post</span>{{ page.previous.title | escape }}</a>
   {%- endif %}
   {%- if page.next %}
-  <a class="post-nav-newer" href="{{ page.next.url | relative_url }}"><span>Newer</span>{{ page.next.title | escape }}</a>
+  <a class="post-nav-newer" href="{{ page.next.url | relative_url }}"><span>Next post</span>{{ page.next.title | escape }}</a>
   {%- endif %}
 </nav>
 {%- endif %}
